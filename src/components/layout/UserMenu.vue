@@ -8,7 +8,7 @@
       @click="isOpen = !isOpen"
     >
       <span
-        class="flex size-9 items-center justify-center rounded-full bg-brand-100 font-semibold text-brand-600 dark:bg-brand-500/15 dark:text-brand-300"
+        class="flex size-8 items-center justify-center rounded-full bg-brand-500 font-semibold text-white shadow-sm shadow-brand-500/20"
       >
         A
       </span>

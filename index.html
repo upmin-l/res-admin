@@ -4,15 +4,11 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TailAdmin Vue 启动模板</title>
+    <title>Cattle Admin</title>
     <script>
       try {
         const savedTheme = localStorage.getItem('theme')
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        document.documentElement.classList.toggle(
-          'dark',
-          savedTheme === 'dark' || (!savedTheme && prefersDark),
-        )
+        document.documentElement.classList.toggle('dark', savedTheme !== 'light')
       } catch {
         // Storage can be unavailable in privacy-restricted contexts.
       }

@@ -23,7 +23,7 @@ const routes: RouteRecordRaw[] = [
       {
         path: 'dashboard',
         name: 'dashboard',
-        component: () => import('@/views/dashboard/DashboardView.vue'),
+        component: () => import('@/views/dashboard/view.vue'),
         meta: { title: '仪表盘', requiresAuth: true },
       },
       {
@@ -71,7 +71,7 @@ router.beforeEach((to) => {
     return { name: 'dashboard' }
   }
 
-  const appTitle = import.meta.env.VITE_APP_TITLE || 'TailAdmin Vue 启动模板'
+  const appTitle = import.meta.env.VITE_APP_TITLE || 'Cattle Admin'
   document.title = `${to.meta.title} | ${appTitle}`
 })
 

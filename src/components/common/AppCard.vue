@@ -1,7 +1,5 @@
 <template>
-  <section
-    class="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900"
-  >
+  <section class="rounded-2xl border border-[var(--border-subtle)] bg-[var(--surface-panel)]">
     <div v-if="$slots.header" class="border-b border-gray-100 px-5 py-4 dark:border-gray-800">
       <slot name="header" />
     </div>

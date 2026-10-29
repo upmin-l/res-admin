@@ -3,8 +3,7 @@
     <section class="flex items-center justify-center p-6 sm:p-10">
       <div class="w-full max-w-md">
         <RouterLink to="/dashboard" class="mb-10 inline-block lg:hidden">
-          <img src="/images/logo/logo.svg" alt="TailAdmin" class="h-10 dark:hidden" />
-          <img src="/images/logo/logo-dark.svg" alt="TailAdmin" class="hidden h-10 dark:block" />
+          <AppBrand />
         </RouterLink>
 
         <p class="text-sm font-medium text-brand-500">欢迎回来</p>
@@ -43,9 +42,9 @@
       <div class="absolute -left-20 -top-20 size-80 rounded-full bg-brand-500/20 blur-3xl" />
       <div class="absolute -bottom-24 -right-24 size-96 rounded-full bg-brand-400/15 blur-3xl" />
       <div class="relative text-center">
-        <img src="/images/logo/logo-dark.svg" alt="TailAdmin" class="mx-auto h-12" />
+        <AppBrand inverse />
         <p class="mt-6 max-w-sm text-sm leading-6 text-gray-300">
-          保留 TailAdmin 清爽视觉基础的轻量 Vue 后台管理启动模板。
+          欢迎使用 Cattle 后台管理平台，让每一次管理都井然有序。
         </p>
       </div>
     </section>
@@ -56,6 +55,7 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import AppButton from '@/components/common/AppButton.vue'
+import AppBrand from '@/components/common/AppBrand.vue'
 import BaseCheckbox from '@/components/form/BaseCheckbox.vue'
 import BaseInput from '@/components/form/BaseInput.vue'
 import { useAuthStore } from '@/stores/auth'

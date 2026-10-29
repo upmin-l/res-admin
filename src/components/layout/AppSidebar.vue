@@ -1,31 +1,19 @@
 <template>
   <aside
-    class="fixed inset-y-0 left-0 z-50 flex flex-col border-r border-gray-200 bg-white px-5 transition-all duration-300 dark:border-gray-800 dark:bg-gray-900"
+    class="fixed inset-y-0 left-0 z-50 flex flex-col border-r border-[var(--border-subtle)] bg-[var(--surface-sidebar)] px-3 transition-all duration-300"
     :class="sidebarClasses"
     @mouseenter="layout.isSidebarHovered = true"
     @mouseleave="layout.isSidebarHovered = false"
   >
-    <div class="flex h-20 items-center" :class="showLabels ? 'justify-start' : 'justify-center'">
-      <RouterLink to="/dashboard" @click="layout.closeMobileSidebar">
-        <img
-          v-if="showLabels"
-          src="/images/logo/logo.svg"
-          alt="TailAdmin"
-          class="h-9 w-auto dark:hidden"
-        />
-        <img
-          v-if="showLabels"
-          src="/images/logo/logo-dark.svg"
-          alt="TailAdmin"
-          class="hidden h-9 w-auto dark:block"
-        />
-        <img v-else src="/images/logo/logo-icon.svg" alt="TailAdmin" class="size-9" />
+    <div class="flex h-24 shrink-0 items-center" :class="showLabels ? 'px-3' : 'justify-center'">
+      <RouterLink to="/dashboard" aria-label="Cattle Admin 首页" @click="layout.closeMobileSidebar">
+        <AppBrand :compact="!showLabels" />
       </RouterLink>
     </div>
 
-    <nav class="flex-1 overflow-y-auto py-5" aria-label="主导航">
+    <nav class="flex-1 overflow-y-auto py-2" aria-label="主导航">
       <p v-if="showLabels" class="mb-3 px-3 text-xs font-semibold uppercase text-gray-400">
-        菜单
+        工作空间
       </p>
       <ul class="space-y-2">
         <li v-for="item in menuItems" :key="item.key">
@@ -48,6 +36,7 @@
               :class="hasActiveChild(item) ? 'menu-item-active' : 'menu-item-inactive'"
               :title="showLabels ? undefined : item.label"
               @click="layout.toggleMenu(item.key)"
+              :aria-expanded="isMenuOpen(item.key)"
             >
               <component :is="item.icon" class="size-5 shrink-0" />
               <span v-if="showLabels">{{ item.label }}</span>
@@ -77,13 +66,39 @@
         </li>
       </ul>
     </nav>
+    <div
+      class="flex h-16 shrink-0 items-center border-t border-[var(--border-subtle)]"
+      :class="showLabels ? 'justify-between px-3' : 'justify-center'"
+    >
+      <span v-if="showLabels" class="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+        <span class="size-1.5 rounded-full bg-brand-500" /> Cattle Admin
+      </span>
+      <button
+        type="button"
+        class="icon-button hidden lg:flex"
+        :aria-label="layout.isSidebarExpanded ? '收起侧边栏' : '展开侧边栏'"
+        @click="layout.toggleSidebar"
+      >
+        <ChevronsLeft v-if="layout.isSidebarExpanded" class="size-4" />
+        <ChevronsRight v-else class="size-4" />
+      </button>
+      <button
+        type="button"
+        class="icon-button lg:hidden"
+        aria-label="关闭侧边栏"
+        @click="layout.closeMobileSidebar"
+      >
+        <X class="size-4" />
+      </button>
+    </div>
   </aside>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { ChevronDown } from 'lucide-vue-next'
+import { ChevronDown, ChevronsLeft, ChevronsRight, X } from 'lucide-vue-next'
+import AppBrand from '@/components/common/AppBrand.vue'
 import { menuItems, type MenuItem } from '@/config/menu'
 import { useLayoutStore } from '@/stores/layout'
 
@@ -91,12 +106,11 @@ const route = useRoute()
 const layout = useLayoutStore()
 
 const showLabels = computed(
-  () =>
-    layout.isSidebarExpanded || layout.isSidebarHovered || layout.isMobileSidebarOpen,
+  () => layout.isSidebarExpanded || layout.isSidebarHovered || layout.isMobileSidebarOpen,
 )
 
 const sidebarClasses = computed(() => [
-  showLabels.value ? 'w-[290px]' : 'w-[90px]',
+  showLabels.value ? 'w-60' : 'w-20',
   layout.isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
 ])
 
@@ -110,8 +124,7 @@ function hasActiveChild(item: MenuItem) {
 
 function isMenuOpen(key: string) {
   return (
-    layout.openMenu === key ||
-    menuItems.some((item) => item.key === key && hasActiveChild(item))
+    layout.openMenu === key || menuItems.some((item) => item.key === key && hasActiveChild(item))
   )
 }
 </script>
